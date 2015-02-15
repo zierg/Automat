@@ -23,26 +23,40 @@ public class Condition implements Comparable<Condition>{
     private final String name;
     private boolean converted = false;
 
+    /**
+     * Конструктор для создания автомата
+     * @param isInput если входное, то true, иначе false
+     * @param isOutput если выходное, то true, иначе false
+     * @param name имя состояния
+     */
     public Condition(boolean isInput, boolean isOutput, String name) {
         this.isInput = isInput;
         this.isOutput = isOutput;
         this.name = name;
     }
 
+    /**
+     * Конструктор для создания объединённого состояния
+     * @param isInput входное
+     * @param conditions список объединяемых состояний
+     */
     public Condition(boolean isInput, List<Condition> conditions) {
         
         this.isInput = isInput;
         boolean isOut = false;
-        StringBuilder b = new StringBuilder();
+        StringBuilder b = new StringBuilder(); // чтобы сохранить имя
         String sep = ",";
         for (Condition c : conditions) {
             if (c.isOutput) {
-                isOut = true;
+                isOut = true; // Если находим выходное, то новое состояние
+                              // тоже будет выходным
             }
             b.append(c.name).append(sep);
             for (Map.Entry<String, List<Condition>> cond : c.routes.entrySet()) {
                 String simbol = cond.getKey();
-                if (!simbol.equals(Automat.EMPTY)) {
+                if (!simbol.equals(Automat.EMPTY)) { // Не добавляем пути по пустому символу
+                    // Добавляем все состояния, в которые можно попасть по 
+                    // пустому символу из состояний, находящихся в списке cond.getValue().
                     List<Condition> list = Automat.getEmptyRoutes(cond.getValue());
                     if (routes.containsKey(simbol)) {
                         Automat.addAllConditions(routes.get(simbol), list);
@@ -58,6 +72,11 @@ public class Condition implements Comparable<Condition>{
         isOutput = isOut;
     }
 
+    /**
+     * Добавление перехода по символу в состояние
+     * @param simbol символ
+     * @param cond состояние
+     */
     public void addSimbol(String simbol, Condition cond) {
         List<Condition> list = new ArrayList<>();
         list.add(cond);
@@ -120,7 +139,14 @@ public class Condition implements Comparable<Condition>{
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
-        b.append("(").append(name).append("):");
+        b.append("(").append(name).append(")");
+        if (isInput) {
+            b.append("<input>");
+        }
+        if (isOutput) {
+            b.append("<output>");
+        }
+        b.append(":");
         String sep = ",";
         for (Map.Entry<String, List<Condition>> entry : routes.entrySet()) {
             String symbol = entry.getKey();
@@ -139,6 +165,10 @@ public class Condition implements Comparable<Condition>{
         return name.compareToIgnoreCase(o.name);
     }
     
+    /**
+     * Для путей по каждому символу заменяет список состояний
+     * на объединённое состояние. Например из a->q1,q2 получится a->(q1,q2)
+     */
     public void convert() {
         if (converted) {
             return;
@@ -146,7 +176,7 @@ public class Condition implements Comparable<Condition>{
         for (Map.Entry<String, List<Condition>> entry : routes.entrySet()) {
             String symbol = entry.getKey();
             List<Condition> list = entry.getValue();
-            Condition newCondition = new Condition(isInput, list);
+            Condition newCondition = new Condition(false, list);
             List<Condition> newList = new ArrayList<>();
             newList.add(newCondition);
             routes.put(symbol, newList);
