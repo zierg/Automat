@@ -33,7 +33,8 @@ public class Automat {
         List<Condition> determ = getDetermAutomat(sourceList);
         System.out.println("Детерминированный автомат:");
         printConditionList(determ);
-        
+        new AutomatFrame(sourceList);
+        new AutomatFrame(determ);
     }
 
     /**
