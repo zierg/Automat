@@ -23,7 +23,7 @@ public class Automat {
     public static final String EMPTY = "empty";
 
     /**
-     * @param args the command line arguments
+     * @param args the c ommand line arguments
      */
     public static void main(String[] args) throws IOException {
         List<Condition> sourceList = readFromFile("automat.txt");

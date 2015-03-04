@@ -1,0 +1,4 @@
+q1:input=true,output=false.a-q2,q3 b-q2 empty-q3
+q2:input=false,output=true.c-q4
+q3:input=false,output=true.b-q1,q2 c-q3
+q4:input=false,output=true.b-q3
