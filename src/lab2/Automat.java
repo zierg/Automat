@@ -75,7 +75,11 @@ public class Automat {
             current = current.getRoutes().get(arc);
         }
 
-        return summ;
+        if (!current.isIsOutput()) {
+            return 0;
+        } else {
+            return summ;
+        }
     }
 
     /**
