@@ -38,13 +38,15 @@ public class Condition implements Comparable<Condition> {
         this.name = name;
     }
 
-    public Arc getArc(String symbol) {
+    public List <Arc> getArc(String symbol) {
+       List<Arc> arcs = new ArrayList<>();
         for (Arc arc : routes.keySet()) {
             if (arc.getSymbol().equals(symbol)) {
-                return arc;
+                arcs.add(arc);
+               
             }
         }
-        return null;
+        return arcs;
     }
 
     /**
