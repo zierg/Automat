@@ -4,7 +4,6 @@
  */
 package lab2;
 
-import automat.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class Automat {
             lines.add(line);
             String name = line.replaceAll("(.*):.*", "$1");
             boolean isInput = Boolean.parseBoolean(line.replaceAll(".*input=(.*),output.*", "$1"));
-            boolean isOutput = Boolean.parseBoolean(line.replaceAll(".*output=(.*)\\..*", "$1"));
+            boolean isOutput = Boolean.parseBoolean(line.replaceAll(".*output=(.*),.*", "$1"));
             conditions.add(new Condition(isInput, isOutput, name));
         }
         int index = 0;
@@ -110,19 +109,19 @@ public class Automat {
             String routes = lines.get(index).replaceAll(".*\\,(.*)", "$1");
 
             StringTokenizer st = new StringTokenizer(routes, " ");
-            System.out.println("routes = " + routes);
+            //System.out.println("routes = " + routes);
             while (st.hasMoreTokens()) {
                 String symbolRoute = st.nextToken();
-                System.out.println("symbolRoute = " + symbolRoute);
+                //System.out.println("symbolRoute = " + symbolRoute);
                 String symbol = symbolRoute.replaceAll("(.*)\\-.*", "$1");
                 String symbolConditions = symbolRoute.replaceAll(".*\\-(.*)\\(.*\\)", "$1");
-                System.out.println(symbolRoute.replaceAll(".*\\((.*)\\)", "$1"));
+                //System.out.println(symbolRoute.replaceAll(".*\\((.*)\\)", "$1"));
                 double probability = Double.parseDouble(symbolRoute.replaceAll(".*\\((.*)\\)", "$1"));
-                System.out.println("p = " + probability);
+                //System.out.println("p = " + probability);
                 StringTokenizer symbolSt = new StringTokenizer(symbolConditions, ",");
                 while (symbolSt.hasMoreTokens()) {
                     String conditionName = symbolSt.nextToken();
-                    System.out.println("conditionName = " + conditionName);
+                    //System.out.println("conditionName = " + conditionName);
                     Condition temp = new Condition(false, false, conditionName);
                     c.addSimbol(symbol, probability, conditions.get(conditions.indexOf(temp)));
                 }
