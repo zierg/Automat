@@ -27,7 +27,7 @@ public class Automat {
      */
     public static void main(String[] args) throws IOException {
         List<Condition> sourceList = readFromFile("automat.txt");
-        double x = summ(sourceList, "aaa");
+        double x = summ(sourceList, "abbbbaa");
         System.out.println("summ = " + x);
     }
 
@@ -49,6 +49,25 @@ public class Automat {
                 list.add(c);
             }
         }
+    }
+
+    public static double probability(Condition cond, String word) {
+
+        if (word.isEmpty()) {
+            if (!cond.isIsOutput()) {
+                return 0;
+            } else {
+                return 1;
+            }
+
+        }
+        double summ=0;
+        for (Arc arc : cond.getArc(Character.toString(word.charAt(0)))){
+         summ 
+        }
+  
+      
+        return
     }
 
     public static double summ(List<Condition> cond, String word) {
