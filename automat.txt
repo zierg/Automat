@@ -1,4 +1,4 @@
-q1:input=true,output=false,a-q2(1)
+q1:input=true,output=false,a-q2(0.4) a-q4(0.6)
 q2:input=false,output=false,a-q3(0.7) b-q4(0.3)
 q3:input=false,output=false,a-q4(1)
-q4:input=false,output=true,b-q2(1)
+q4:input=false,output=true,b-q2(0.9) a-q3(0.1)
